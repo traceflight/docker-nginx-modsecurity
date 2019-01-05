@@ -1,9 +1,9 @@
 FROM alpine:3.8
-
-LABEL maintainer="Elisiano Petrini <elisiano@gmail.com>"
+MAINTAINER JulianWang <traceflight@outlook.com>
 
 ENV NGINX_VERSION 1.15.3
 
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
 RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 	&& CONFIG="\
 		--prefix=/etc/nginx \
@@ -94,7 +94,7 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 		pgp.mit.edu \
 	; do \
 		echo "Fetching GPG key $GPG_KEYS from $server"; \
-		gpg --keyserver "$server" --keyserver-options timeout=10 --recv-keys "$GPG_KEYS" && found=yes && break; \
+		gpg --keyserver "$server" --keyserver-options timeout=20 --recv-keys "$GPG_KEYS" && found=yes && break; \
 	done; \
 	test -z "$found" && echo >&2 "error: failed to fetch GPG key $GPG_KEYS" && exit 1; \
 	gpg --batch --verify nginx.tar.gz.asc nginx.tar.gz \
