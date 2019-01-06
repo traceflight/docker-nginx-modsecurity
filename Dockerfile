@@ -1,7 +1,7 @@
 FROM alpine:3.8
 MAINTAINER JulianWang <traceflight@outlook.com>
 
-ENV NGINX_VERSION 1.15.3
+ENV NGINX_VERSION 1.15.8
 
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
 RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
@@ -103,9 +103,8 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 	&& tar -zxC /usr/src -f nginx.tar.gz \
 	&& rm nginx.tar.gz \
 	&& cd /usr/src \
-	&& git clone https://github.com/SpiderLabs/ModSecurity \
+	&& git clone --depth 1 -b v3/master --single-branch https://github.com/SpiderLabs/ModSecurity \
 	&& cd ModSecurity \
-	&& git checkout v3/master \
 	&& git submodule init \
 	&& git submodule update \
 	&& sed -i -e 's/u_int64_t/uint64_t/g' \
@@ -126,8 +125,18 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 	&& ./configure \
 	&& make \
 	&& make install \
+        && mkdir -p /etc/nginx/modsec.d \
+        && cp /usr/src/ModSecurity/modsecurity.conf-recommended /etc/nginx/modsec.d \
+        && mv /etc/nginx/modsec.d/modsecurity.conf-recommended /etc/nginx/modsec.d/modsecurity.conf \
+        && cp /usr/src/ModSecurity/unicode.mapping /etc/nginx/modsec.d \
+        && sed -i -e 's/SecRuleEngine DetectionOnly/SecRuleEngine On/g' /etc/nginx/modsec.d/modsecurity.conf \
+        && cd /etc/nginx/modsec.d \
+        && git clone --depth 1 https://github.com/SpiderLabs/owasp-modsecurity-crs \
+        && cd owasp-modsecurity-crs \
+        && mv crs-setup.conf.example crs-setup.conf \
+        && printf "include /etc/nginx/modsec.d/modsecurity.conf\ninclude /etc/nginx/modsec.d/owasp-modsecurity-crs/crs-setup.conf\ninclude /etc/nginx/modsec.d/owasp-modsecurity-crs/rules/*.conf\n" > /etc/nginx/modsec.d/main.conf \
 	&& cd /usr/src \
-	&& git clone https://github.com/SpiderLabs/ModSecurity-nginx \
+	&& git clone --depth 1 https://github.com/SpiderLabs/ModSecurity-nginx.git \
 	&& cd /usr/src/nginx-$NGINX_VERSION \
 	&& ./configure $CONFIG --with-debug \
 	&& make -j$(getconf _NPROCESSORS_ONLN) \
