@@ -134,6 +134,9 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
         && git clone --depth 1 https://github.com/SpiderLabs/owasp-modsecurity-crs \
         && cd owasp-modsecurity-crs \
         && mv crs-setup.conf.example crs-setup.conf \
+        && cd rules \
+        && mv REQUEST-900-EXCLUSION-RULES-BEFORE-CRS.conf.example REQUEST-900-EXCLUSION-RULES-BEFORE-CRS.conf \
+        && mv RESPONSE-999-EXCLUSION-RULES-AFTER-CRS.conf.example RESPONSE-999-EXCLUSION-RULES-AFTER-CRS.conf \
         && printf "include /etc/nginx/modsec.d/modsecurity.conf\ninclude /etc/nginx/modsec.d/owasp-modsecurity-crs/crs-setup.conf\ninclude /etc/nginx/modsec.d/owasp-modsecurity-crs/rules/*.conf\n" > /etc/nginx/modsec.d/main.conf \
 	&& cd /usr/src \
 	&& git clone --depth 1 https://github.com/SpiderLabs/ModSecurity-nginx.git \
