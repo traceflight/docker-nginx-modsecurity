@@ -131,7 +131,11 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
         && cp /usr/src/ModSecurity/unicode.mapping /etc/nginx/modsec.d \
         && sed -i -e 's/SecRuleEngine DetectionOnly/SecRuleEngine On/g' /etc/nginx/modsec.d/modsecurity.conf \
         && cd /etc/nginx/modsec.d \
-        && git clone --depth 1 https://github.com/SpiderLabs/owasp-modsecurity-crs \
+	&& CRS_VERSION=$(curl --silent "https://api.github.com/repos/SpiderLabs/owasp-modsecurity-crs/releases/latest" | grep '"tag_name":' | sed -E 's/.*"v([^"]+)".*/\1/') \
+        && curl -fSL https://github.com/SpiderLabs/owasp-modsecurity-crs/archive/v$CRS_VERSION.tar.gz -o owasp-modsecurity-crs.tar.gz \
+	&& tar -zxC ./ -f owasp-modsecurity-crs.tar.gz \
+	&& rm ./owasp-modsecurity-crs.tar.gz \
+	&& mv owasp-modsecurity-crs-$CRS_VERSION owasp-modsecurity-crs \
         && cd owasp-modsecurity-crs \
         && mv crs-setup.conf.example crs-setup.conf \
         && cd rules \
