@@ -1,7 +1,7 @@
-FROM alpine:3.8
+FROM alpine:3.9
 MAINTAINER JulianWang <traceflight@outlook.com>
 
-ENV NGINX_VERSION 1.15.8
+ENV NGINX_VERSION 1.15.12
 
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
 RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
@@ -63,7 +63,7 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 		zlib-dev \
 		linux-headers \
 		curl \
-		gnupg \
+		gnupg1 \
 		libxslt-dev \
 		gd-dev \
 		geoip-dev \
@@ -107,20 +107,6 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 	&& cd ModSecurity \
 	&& git submodule init \
 	&& git submodule update \
-	&& sed -i -e 's/u_int64_t/uint64_t/g' \
-		./src/actions/transformations/html_entity_decode.cc \
-		./src/actions/transformations/html_entity_decode.h \
-		./src/actions/transformations/js_decode.cc \
-		./src/actions/transformations/js_decode.h \
-		./src/actions/transformations/parity_even_7bit.cc \
-		./src/actions/transformations/parity_even_7bit.h \
-		./src/actions/transformations/parity_odd_7bit.cc \
-		./src/actions/transformations/parity_odd_7bit.h \
-		./src/actions/transformations/parity_zero_7bit.cc \
-		./src/actions/transformations/parity_zero_7bit.h \
-		./src/actions/transformations/remove_comments.cc \
-		./src/actions/transformations/url_decode_uni.cc \
-		./src/actions/transformations/url_decode_uni.h \
 	&& sh build.sh \
 	&& ./configure \
 	&& make \
