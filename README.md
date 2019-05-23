@@ -1,13 +1,13 @@
 # Nginx with WAF
 
-在[官方ngxin Dockerfile](https://github.com/nginxinc/docker-nginx/blob/1.15.12/mainline/alpine-perl/Dockerfile)的基础上，增加[ModSecurity V3版本](https://github.com/SpiderLabs/ModSecurity/tree/v3/master)作为WAF。
+在[官方ngxin Dockerfile](https://github.com/traceflight/nginx-with-waf/raw/master/Dockerfile)的基础上，增加[ModSecurity V3版本](https://github.com/SpiderLabs/ModSecurity/tree/v3/master)作为WAF。
 
 ## 使用方法
 
 ### 下载镜像
 
 ```bash
-docker pull traceflight/nginx-with-waf:1.15.12
+docker pull traceflight/nginx-with-waf
 ```
 
 ### 运行
@@ -16,7 +16,7 @@ docker pull traceflight/nginx-with-waf:1.15.12
 docker run -d -v /path/to/conf/:/etc/nginx/conf.d/ \
               -v /path/to/log/:/var/log/nginx/ \
               -p 80:80 -p 443:443 \
-              traceflight/nginx-with-waf:1.15.12
+              traceflight/nginx-with-waf
 ```
 
 或使用docker-compose：
@@ -47,6 +47,7 @@ modsecurity off;
 
 * [Nginx](https://github.com/nginxinc/docker-nginx)
 * [ModSecurity](https://github.com/SpiderLabs/ModSecurity)
+* [ModSecurity nginx connector](https://github.com/SpiderLabs/ModSecurity-nginx)
 * [owasp-modsecurity-crs](https://github.com/SpiderLabs/owasp-modsecurity-crs)
 
 ## 与官方Dockerfile的区别
@@ -70,5 +71,5 @@ When you provide your configuration you can enable modsecurity. Please refer to 
 If you're curious to know the difference from this dockerfile and the upstream one:
 
 ```bash
-diff <(curl -fsL https://github.com/nginxinc/docker-nginx/raw/1.15.12/mainline/alpine-perl/Dockerfile) <(curl -fsL https://github.com/traceflight/nginx-with-waf/raw/1.15.12/Dockerfile)
+diff <(curl -fsL https://github.com/traceflight/nginx-with-waf/raw/master/Dockerfile) <(curl -fsL https://github.com/traceflight/nginx-with-waf/raw/1.15.12/Dockerfile)
 ```
