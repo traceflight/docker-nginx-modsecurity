@@ -19,7 +19,7 @@ docker run -d -v /path/to/conf/:/etc/nginx/conf.d/ \
               traceflight/nginx-with-waf
 ```
 
-或使用docker-compose：
+或使用[docker compose](https://docs.docker.com/compose/)，创建docker-compose.yml文件：
 
 ```yaml
 version: '3'
@@ -34,6 +34,12 @@ services:
       - "80:80"
       - "443:443"
 ```
+
+运行如下命令：
+
+ ```bash
+ docker-compose up -d
+ ```
 
 ### Waf配置
 
