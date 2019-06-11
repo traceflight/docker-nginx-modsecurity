@@ -77,5 +77,5 @@ When you provide your configuration you can enable modsecurity. Please refer to 
 If you're curious to know the difference from this dockerfile and the upstream one:
 
 ```bash
-diff <(curl -fsL https://github.com/traceflight/nginx-with-waf/raw/master/Dockerfile) <(curl -fsL https://github.com/traceflight/nginx-with-waf/raw/1.15.12/Dockerfile)
+diff <(curl -fsL https://github.com/nginxinc/docker-nginx/raw/1.15.12/mainline/alpine-perl/Dockerfile) <(curl -fsL https://github.com/traceflight/nginx-with-waf/raw/1.15.12/Dockerfile)
 ```
