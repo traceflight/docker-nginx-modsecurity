@@ -1,6 +1,6 @@
 # Nginx with WAF
 
-在[官方ngxin Dockerfile](https://github.com/traceflight/nginx-with-waf/raw/master/Dockerfile)的基础上，增加[ModSecurity V3版本](https://github.com/SpiderLabs/ModSecurity/tree/v3/master)作为WAF。
+在[官方ngxin Dockerfile](https://github.com/nginxinc/docker-nginx/raw/1.15.12/mainline/alpine-perl/Dockerfile)的基础上，增加[ModSecurity V3版本](https://github.com/SpiderLabs/ModSecurity/tree/v3/master)作为WAF。
 
 ## 使用方法
 
@@ -66,7 +66,7 @@ diff <(curl -fsL https://github.com/nginxinc/docker-nginx/raw/1.15.12/mainline/a
 
 # NGINX with libModSecurity + ModSecurity-nginx connector + OWASP ModSecurity Core Rule Set (CRS) 
 
-The dockerfile of this container has been copied from the [official nginx repo (alpine-perl variant)](https://github.com/nginxinc/docker-nginx/blob/1.15.3/mainline/alpine-perl/Dockerfile) and has been modified to add [ModSecurity library (v3)](https://github.com/SpiderLabs/ModSecurity/tree/v3/master) + [ModSecurity nginx connector](https://github.com/SpiderLabs/ModSecurity-nginx) + [OWASP ModSecurity Core Rule Set (CRS)](https://github.com/SpiderLabs/owasp-modsecurity-crs)
+The dockerfile of this container has been copied from the [official nginx repo (alpine-perl variant)](https://github.com/nginxinc/docker-nginx/raw/1.15.12/mainline/alpine-perl/Dockerfile) and has been modified to add [ModSecurity library (v3)](https://github.com/SpiderLabs/ModSecurity/tree/v3/master) + [ModSecurity nginx connector](https://github.com/SpiderLabs/ModSecurity-nginx) + [OWASP ModSecurity Core Rule Set (CRS)](https://github.com/SpiderLabs/owasp-modsecurity-crs)
 
 You can refer to the [official nginx image documentation](https://hub.docker.com/_/nginx/) for instructions on how to use this image.
 
